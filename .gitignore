@@ -1,0 +1,63 @@
+# --- UNITY RECURSIVE (Działa wszędzie) ---
+**/[Ll]ibrary/
+**/[Tt]emp/
+**/[Oo]bj/
+**/[Bb]uild/
+**/[Bb]uilds/
+**/[Ll]ogs/
+**/[Uu]ser[Ss]ettings/
+**/[Mm]emoryCaptures/
+
+# --- PLIKI PROJEKTOWE I TYMCZASOWE ---
+**/*.csproj
+**/*.unityproj
+**/*.sln
+**/*.suo
+**/*.tmp
+**/*.user
+**/*.userprefs
+**/*.pidb
+**/*.booproj
+**/*.svd
+**/*.pdb
+**/*.mdb
+**/*.opendb
+**/*.VC.db
+**/*.pidb.meta
+
+# --- ASSETS META ---
+# Ignoruj meta tylko gdy sam asset jest ignorowany
+!**/[Aa]ssets/**/*.meta
+
+# --- BUILD OUTPUT ---
+**/*.apk
+**/*.aab
+**/*.unitypackage
+
+# --- WINDOWS ---
+**/Thumbs.db
+**/[Dd]esktop.ini
+**/$RECYCLE.BIN/
+**/*.lnk
+
+# --- VISUAL STUDIO ---
+**/.vs/
+**/[Tt]est[Rr]esult*/
+**/[Bb]uild[Ll]og.*
+**/[Bb]in/
+
+# --- NUGET ---
+**/*.nupkg
+**/[Pp]ackages/*
+!**/[Pp]ackages/build/
+**/*.nuget.props
+**/*.nuget.targets
+
+# --- BLENDER ---
+**/*.blend1
+**/*.blend2
+**/*.blend3
+**/*.blend4
+**/*.blend5
+**/*.blend6
+**/*.blend7
