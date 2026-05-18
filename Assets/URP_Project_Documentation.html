@@ -1,0 +1,132 @@
+﻿<!DOCTYPE html><html lang='en'><head><meta charset='UTF-8'>
+<title>URP Project Setup v1.3</title><style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',Arial,sans-serif;font-size:13px;color:#1a1a1a;background:#fff;padding:0;max-width:960px;margin:0 auto}
+.brand-bar{height:5px;background:linear-gradient(90deg,#06a4fb 0%,#06a4fb 50%,#82d17c 50%,#82d17c 75%,#dd455f 75%,#dd455f 100%)}
+.doc-wrap{padding:40px 56px 48px}
+.doc-header{padding-bottom:18px;margin-bottom:6px;display:flex;justify-content:space-between;align-items:flex-start}
+.doc-header h1{font-size:24px;font-weight:800;letter-spacing:.5px;line-height:1.2}
+.brand-e{color:#06a4fb}
+.brand-a{color:#dd455f}
+.badge{display:inline-block;background:#dd455f;color:#fff;font-size:10px;font-weight:700;padding:2px 9px;border-radius:10px;margin-left:8px;letter-spacing:1px;vertical-align:middle}
+.doc-sub{font-size:12px;color:#777;margin-top:5px}
+.meta{font-size:11px;color:#888;text-align:right;line-height:1.8}
+.divider{height:3px;background:linear-gradient(90deg,#06a4fb,#82d17c,#dd455f);margin-bottom:28px;border-radius:2px}
+.section{margin-bottom:28px;page-break-inside:avoid}
+.sh{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1.4px;color:#fff;background:#06a4fb;padding:7px 14px;margin-bottom:10px;border-left:4px solid #dd455f;border-radius:0 3px 3px 0}
+.ssh{font-size:11px;font-weight:700;color:#06a4fb;border-bottom:2px solid #cceeff;padding-bottom:3px;margin:12px 0 7px;text-transform:uppercase;letter-spacing:.8px}
+table{width:100%;border-collapse:collapse;margin-bottom:8px;font-size:12px}
+th{background:#e8f7ff;color:#06a4fb;font-weight:700;text-align:left;padding:6px 10px;border-bottom:2px solid #06a4fb}
+td{padding:5px 10px;border-bottom:1px solid #eef7ff;vertical-align:top}
+tr:last-child td{border-bottom:none}
+tr:nth-child(even) td{background:#f6fcff}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:4px}
+.card{border:1px solid #cceeff;border-radius:5px;padding:11px 13px;background:#f6fcff;border-top:3px solid #06a4fb}
+.card.full{grid-column:1/-1}
+.pname{font-weight:700;font-size:12.5px;color:#06a4fb;margin-bottom:5px}
+.pr{display:flex;justify-content:space-between;font-size:11px;color:#444;line-height:1.9}
+.pr .lbl{color:#888}.pr .val{font-weight:600;color:#1a1a1a}
+.swatch{display:inline-block;width:12px;height:12px;border-radius:2px;border:1px solid #ccc;margin-right:4px;vertical-align:middle}
+.note{font-size:11px;color:#2a5a2a;background:#f0faf0;border-left:3px solid #82d17c;padding:7px 12px;margin-top:8px;border-radius:0 3px 3px 0}
+.pill{display:inline-block;font-size:10px;font-weight:600;padding:1px 8px;border-radius:8px;background:#cceeff;color:#0077bb;margin-right:3px}
+.pill-ok{background:#d8f5d0;color:#2a6e20}
+.pill-off{background:#fde0e5;color:#aa1a30}
+.footer{margin-top:36px;padding-top:12px;font-size:10.5px;color:#aaa;display:flex;justify-content:space-between;align-items:center;border-top:1px solid #eee}
+@media print{.brand-bar{-webkit-print-color-adjust:exact;print-color-adjust:exact}.sh{-webkit-print-color-adjust:exact;print-color-adjust:exact}.doc-wrap{padding:28px 36px}.section{page-break-inside:avoid}}</style></head><body>
+<div class='doc-header'>
+  <div>
+    <h1><span class='brand-e'>EMACE</span><span class='brand-a'>ART</span> &nbsp;URP Project Setup <span class='badge'>v 1.3</span></h1>
+    <div style='font-size:12px;color:#555;margin-top:4px'>Render Pipeline Configuration &amp; Post-Processing Reference</div>
+  </div>
+  <div class='meta'>EmacE Art<br>2026 · 05 · 15<br>Unity URP 14.x</div>
+</div>
+<div class='section'><div class='sh'>Quick Setup Guide — How to Connect URP</div>
+<p style='font-size:12px;color:#444;margin-bottom:10px'>Follow these steps in order. Each step takes under a minute.</p>
+<table><thead><tr><th style='width:28px'>#</th><th>Step</th><th>Where</th><th>Notes</th></tr></thead><tbody>
+<tr><td><b>1</b></td><td><b>Open URP Connector</b></td><td>Tools → EmacE → URP Connector</td><td>If URP is not installed the panel offers a one-click install button.</td></tr>
+<tr><td><b>2</b></td><td><b>Select pipeline asset</b></td><td>Section 1 — Graphics Settings</td><td>Pick the asset matching your target quality (e.g. <em>HighQuality</em>). Use Auto-match by name to fill all quality levels automatically.</td></tr>
+<tr><td><b>3</b></td><td><b>Create Very High asset</b></td><td>Section 1 — Quality Settings</td><td>Click <em>Ensure Very High Pipeline Asset</em> if the button is visible. Sets optimised shadow distance, cascades and LUT size automatically.</td></tr>
+<tr><td><b>4</b></td><td><b>Click CONNECT URP</b></td><td>Section 1 — bottom</td><td>Assigns the pipeline asset to Graphics Settings and all enabled quality levels. Activates the <em>High</em> level. GUIDs are regenerated if the option is checked.</td></tr>
+<tr><td><b>5</b></td><td><b>Upgrade materials</b></td><td>Section 2 — Materials</td><td>Assign the materials folder and click <em>Upgrade Materials to URP</em>. Unity's built-in converter remaps Standard → URP/Lit shaders.</td></tr>
+<tr><td><b>6</b></td><td><b>Fix terrain</b></td><td>Section 3 — Terrain</td><td>Click <em>Fix Terrain</em>. Creates a URP/Terrain/Lit material per Terrain and assigns it. Save the scene afterwards.</td></tr>
+<tr><td><b>7</b></td><td><b>Connect post-processing</b></td><td>Section 4 — Post Processing</td><td>Assign a profile folder. Select an existing profile and click <em>Connect</em>, or choose a climate preset and click <em>Generate</em>. A Global Volume is created if the scene has none. The camera is fixed automatically (Post Processing ON, FXAA).</td></tr>
+<tr><td><b>8</b></td><td><b>Add SSAO</b></td><td>Section 5 — Renderer Features</td><td>Select the renderer asset and click <em>Add Screen Space Ambient Occlusion</em>. Defaults: Blue Noise, Intensity 3, Depth Normals, High quality.</td></tr>
+<tr><td><b>9</b></td><td><b>Save the scene</b></td><td>File → Save (Ctrl+S)</td><td>The Global Volume and camera changes are scene objects — save to keep them.</td></tr>
+</tbody></table>
+<div class='note' style='margin-top:8px'><b>Health check:</b> The five status dots at the top of the panel (URP · Assets · Volume · Camera PP · SSAO) turn green as each step is completed. All green = fully connected.</div>
+</div>
+<div class='section'><div class='sh'>1 — Render Pipeline</div>
+<table><thead><tr><th>Quality Level</th><th>Pipeline Asset</th><th>Status</th></tr></thead><tbody>
+<tr><td style=''>Fastest</td><td style=''>New Universal Render Pipeline Asset-LowestQuality</td><td><span class='pill'>active</span></td></tr>
+<tr><td style=''>Fast</td><td style=''>New Universal Render Pipeline Asset-LowQuality</td><td><span class='pill'>active</span></td></tr>
+<tr><td style=''>Simple</td><td style=''>New Universal Render Pipeline Asset-LowQuality</td><td><span class='pill'>active</span></td></tr>
+<tr><td style=''>Good</td><td style=''>New Universal Render Pipeline Asset-MediumQuality</td><td><span class='pill'>active</span></td></tr>
+<tr><td style=''>Beautiful</td><td style=''>New Universal Render Pipeline Asset-HighQuality</td><td><span class='pill'>active</span></td></tr>
+<tr><td style=''>Fantastic</td><td style=''>New Universal Render Pipeline Asset-VeryHighQuality</td><td><span class='pill'>active</span></td></tr>
+</tbody></table>
+<div class='ssh'>Very High — Shadow Configuration</div>
+<table><thead><tr><th>Parameter</th><th>Value</th></tr></thead><tbody>
+<tr><td>Shadow Max Distance</td><td><b>150 m</b></td></tr>
+<tr><td>Cascade Count</td><td><b>4</b></td></tr>
+<tr><td>Depth Bias</td><td><b>0,00</b></td></tr>
+<tr><td>Normal Bias</td><td><b>0,00</b></td></tr>
+<tr><td>Soft Shadows</td><td><b>On</b></td></tr>
+<tr><td>Color Grading Mode</td><td><b>LDR</b></td></tr>
+<tr><td>LUT Size</td><td><b>32</b></td></tr>
+</tbody></table>
+</div>
+<div class='section'><div class='sh'>2 — Renderer Features</div>
+<div class='ssh'>Screen Space Ambient Occlusion (SSAO)</div>
+<p style='font-size:11px;color:#555;margin-bottom:7px'>Renderer: <b>New Universal Render Pipeline Asset_Renderer</b></p>
+<table><thead><tr><th>Parameter</th><th>Value</th></tr></thead><tbody>
+<tr><td>Method</td><td><b>—</b></td></tr>
+<tr><td>Intensity</td><td><b>0,16</b></td></tr>
+<tr><td>Radius</td><td><b>0,33</b></td></tr>
+<tr><td>Falloff</td><td><b>200</b></td></tr>
+<tr><td>Direct Lighting</td><td><b>0,225</b></td></tr>
+<tr><td>Source</td><td><b>Depth Normals</b></td></tr>
+<tr><td>Blur Quality</td><td><b>High</b></td></tr>
+<tr><td>Samples</td><td><b>Low</b></td></tr>
+<tr><td>Downsample</td><td><b>Off</b></td></tr>
+<tr><td>After Opaque</td><td><b>On</b></td></tr>
+</tbody></table>
+</div>
+<div class='section'><div class='sh'>3 — Post-Processing Profiles</div>
+<p style='font-size:12px;color:#333;margin-bottom:10px'>All profiles use Tonemapping (ACES) as base. Components: ColorAdjustments · Bloom · Vignette · WhiteBalance.</p>
+<div class='grid'>
+<div class='card'>
+<div class='pname'>EA_19Th_PP_Profile Realistic</div>
+<div class='pr'><span class='lbl'>Tonemapping</span><span class='val'>ACES</span></div>
+<div class='pr'><span class='lbl'>Contrast / Saturation</span><span class='val'>-15,4 / -40,2</span></div>
+<div class='pr'><span class='lbl'>Post Exposure</span><span class='val'>+0,4 EV</span></div>
+<div class='pr'><span class='lbl'>Bloom  i / thr / sc</span><span class='val'>0,81 / 1,00 / 0,72</span></div>
+<div class='pr'><span class='lbl'>Vignette  i / sm</span><span class='val'>0,26 / 0,40</span></div>
+<div class='pr'><span class='lbl'>White Balance  temp / tint</span><span class='val'>0° / 0</span></div>
+</div>
+<div class='card'>
+<div class='pname'>EA_19Th_PP_Profile</div>
+<div class='pr'><span class='lbl'>Tonemapping</span><span class='val'>ACES</span></div>
+<div class='pr'><span class='lbl'>Contrast / Saturation</span><span class='val'>-10 / -11</span></div>
+<div class='pr'><span class='lbl'>Post Exposure</span><span class='val'>+0,24 EV</span></div>
+<div class='pr'><span class='lbl'>Bloom  i / thr / sc</span><span class='val'>1,00 / 1,00 / 0,72</span></div>
+<div class='pr'><span class='lbl'>Vignette  i / sm</span><span class='val'>0,26 / 0,40</span></div>
+<div class='pr'><span class='lbl'>White Balance  temp / tint</span><span class='val'>0° / 0</span></div>
+</div>
+</div>
+<div class='note' style='margin-top:10px'>Currently connected to scene Global Volume: <b>EA_19Th_PP_Profile Realistic</b></div>
+</div>
+<div class='section'><div class='sh'>4 — Materials &amp; Terrain</div>
+<table><thead><tr><th>Asset type</th><th>Before</th><th>After</th></tr></thead><tbody>
+<tr><td>Scene materials</td><td>Standard (Built-in)</td><td><b>Universal Render Pipeline / Lit</b></td></tr>
+<tr><td>Terrain material</td><td>Default-Terrain-Diffuse</td><td><b>Universal Render Pipeline / Terrain / Lit</b></td></tr>
+<tr><td>Terrain material asset</td><td>—</td><td><b>{TerrainName}_URP_Terrain.mat</b> — saved alongside TerrainData</td></tr>
+</tbody></table>
+<div class='note'>Texture maps (Albedo, Normal, Metallic, Occlusion) remapped by Unity's built-in converter. Verify visually in Scene and Game view.</div>
+</div>
+<div class='section'><div class='sh'>5 — Asset Integrity</div>
+<p style='font-size:12px;color:#333'>All pipeline asset <code>.meta</code> files were assigned fresh GUIDs.
+References in <code>.prefab .mat .unity .asset .controller .anim</code> files across the project were updated to match.
+The pipeline folder is safe for redistribution and cross-project import without GUID collisions.</p>
+</div>
+<div class='footer'><span>URP Setup v1.3 — Project Documentation</span><span class='brand'><span class='brand-e' style='color:#1565C0'>EMACE</span><span style='color:#C62828'>ART</span> · 2026</span></div>
+</body></html>
