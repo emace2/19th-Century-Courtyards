@@ -55,7 +55,7 @@ Shader "EmacEArt/SkyboxURP"
         _CloudDensity     ("Density",           Range(0.0, 1.0))  = 1.0
         _CloudStretch     ("Stretch",          Range(0.0, 0.97)) = 0.0
         _CloudSwirl       ("Swirl",            Range(0.0, 1.0))  = 0.0
-        // 0=Standard 1=Pierzaste 2=Oblé 3=Skosne 4=Cubic — edytor pokazuje popup
+        // 0=Standard 1=Feathered 2=Round 3=Diagonal 4=Cubic — editor shows popup
         _CloudStyle       ("Style",            Range(0.0, 4.0))  = 0.0
         _CloudScale       ("Scale",            Range(0.5, 8.0))  = 3.0
         _CloudHeight      ("Min Elevation",    Range(0.0, 0.5))  = 0.05
@@ -195,10 +195,10 @@ Shader "EmacEArt/SkyboxURP"
                 return v * (1.0 / 0.9375);
             }
 
-            // ── Styl 1: Pierzaste — ridged FBM (wąskie grzbiety, jak cirrus) ─
+            // ── Style 1: Feathered — ridged FBM (thin ridges, like cirrus clouds) ─
             float CloudFBMRidged(float2 p)
             {
-                // Odwraca noise wokół 0.5: grzbiety tam gdzie noise = 0.5
+                // Inverts noise around 0.5: ridges appear where noise = 0.5
                 float v  = (1.0 - abs(CloudNoise(p)                           * 2.0 - 1.0)) * 0.5000;
                 v       += (1.0 - abs(CloudNoise(p * 2.1 + float2(5.2, 1.3)) * 2.0 - 1.0)) * 0.2500;
                 v       += (1.0 - abs(CloudNoise(p * 4.3 + float2(9.7, 2.8)) * 2.0 - 1.0)) * 0.1250;
@@ -206,7 +206,7 @@ Shader "EmacEArt/SkyboxURP"
                 return saturate(v * (1.0 / 0.9375));
             }
 
-            // ── Styl 2 & 4: Voronoi — округłe (Euklides) lub cubic (Czebyszew) ─
+            // ── Style 2 & 4: Voronoi — round (Euclidean) or cubic (Chebyshev) ──
             float2 VoronoiCenter(float2 cell)
             {
                 return cell + float2(
@@ -214,7 +214,7 @@ Shader "EmacEArt/SkyboxURP"
                     CloudHash(cell + float2(5.3, 2.1)));
             }
 
-            float CloudVoronoiEuclid(float2 p)  // obłe — okrągłe blobs
+            float CloudVoronoiEuclid(float2 p)  // round blobs — Euclidean distance
             {
                 float2 i = floor(p);
                 float minD = 10.0;
@@ -227,7 +227,7 @@ Shader "EmacEArt/SkyboxURP"
                 return 1.0 - saturate(minD * 1.35);
             }
 
-            float CloudVoronoiChebyshev(float2 p) // cubic — kwadratowe komórki
+            float CloudVoronoiChebyshev(float2 p) // cubic cells — Chebyshev L-inf distance
             {
                 float2 i = floor(p);
                 float minD = 10.0;
@@ -259,25 +259,16 @@ Shader "EmacEArt/SkyboxURP"
                 skyCol       = lerp(skyCol, _GroundColor.rgb, groundT);
 
                 // ── Azimuthal sky gradient (side-to-side compass tint) ───
-                if (_SkyGradStr > 0.001h)
                 {
-                    // Convert angle (degrees) to a horizontal direction vector
-                    float ang     = (float)_SkyGradAngle * 0.01745329252; // deg→rad
-                    float2 gradH  = float2(sin(ang), cos(ang));
-
-                    // Project view direction onto the horizontal plane
-                    float2 dirH   = float2(dir.x, dir.z);
-                    float  dLen   = length(dirH);
-                    // dot ∈ [-1,1] → remap to [0,1]
-                    float  azDot  = dLen > 0.001 ? dot(dirH / dLen, gradH) : 0.0;
-                    float  azBlend = azDot * 0.5 + 0.5;
-
-                    // Soft threshold centred at azBlend=1 (directly facing gradDir)
-                    half tAz = saturate(((half)azBlend - (1.0h - _SkyGradSpread))
-                                        / max(_SkyGradSpread, 0.01h));
-                    tAz = tAz * tAz * (3.0h - 2.0h * tAz);  // smoothstep
-
-                    // Blend on top of sky, excluding ground
+                    float  ang   = (float)_SkyGradAngle * 0.01745329252; // degrees to radians
+                    float2 gradH = float2(sin(ang), cos(ang));            // compass direction vector
+                    float2 dirH  = float2(dir.x, dir.z);
+                    float  dLen  = length(dirH);
+                    float  azDot = dLen > 0.001 ? dot(dirH / dLen, gradH) : 0.0; // -1..1
+                    // Linear ramp across the full sky — always visible when Strength > 0
+                    half   tAz  = saturate((half)(azDot * 0.5 + 0.5));
+                    // Spread controls falloff sharpness: 1=soft full-sky, 0.1=hard half-sphere
+                    tAz = pow(tAz, max(1.0h / _SkyGradSpread, 0.01h));
                     skyCol = lerp(skyCol, _SkyGradColor.rgb, tAz * _SkyGradStr * (1.0h - groundT));
                 }
 
@@ -328,30 +319,30 @@ Shader "EmacEArt/SkyboxURP"
 
                     if (stretch > 0.01 || swirl > 0.01)
                     {
-                        // Stretch — nieliniowy (kwadratowy): powolny start, dramatyczny koniec
+                        // Stretch — non-linear (squared): slow start, dramatic at high values
                         float sa = stretch * stretch;
                         float wx = CloudNoise(cloudUV * 0.28 + float2(0.0, 0.0));
                         float wy = CloudNoise(cloudUV * 0.28 + float2(4.7, 2.1));
                         cloudUV.x += (wx - 0.5) * sa * 7.0;
                         cloudUV.y += (wy - 0.5) * sa * 1.4;
 
-                        // Swirl — drugi poziom domain warp z komponentem prostopadłym.
-                        // float2(-d.y, d.x) = rotacja 90° wektora d → zawirowanie organiczne.
+                        // Swirl — second-level domain warp with a perpendicular component.
+                        // float2(-d.y, d.x) = 90-degree rotation of d → organic swirling.
                         if (swirl > 0.01)
                         {
                             float sx = CloudNoise(cloudUV * 0.32 + float2(1.7, 9.2));
                             float sy = CloudNoise(cloudUV * 0.32 + float2(8.3, 2.8));
                             float2 d  = float2(sx - 0.5, sy - 0.5);
-                            cloudUV  += d                      * swirl * 3.2   // liniowa składowa
-                                      + float2(-d.y, d.x)     * swirl * 2.4;  // prostopadła = rotacja
+                            cloudUV  += d                      * swirl * 3.2   // linear component
+                                      + float2(-d.y, d.x)     * swirl * 2.4;  // perpendicular = rotation
                         }
                     }
 
                     // ── Pattern style selector ───────────────────────────────
                     int cStyle = (int)round((float)_CloudStyle);
                     float n;
-                    if      (cStyle == 1) n = CloudFBMRidged(cloudUV);          // pierzaste
-                    else if (cStyle == 2) n = CloudVoronoiEuclid(cloudUV);      // obłe
+                    if      (cStyle == 1) n = CloudFBMRidged(cloudUV);          // feathered / cirrus
+                    else if (cStyle == 2) n = CloudVoronoiEuclid(cloudUV);      // round blobs
                     else if (cStyle == 3) {                                      // skośne 45°
                         float2 rUV = float2(cloudUV.x * 0.7071 - cloudUV.y * 0.7071,
                                             cloudUV.x * 0.7071 + cloudUV.y * 0.7071);

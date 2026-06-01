@@ -83,9 +83,9 @@ public class EmacSkyboxURPEditor : ShaderGUI
             using (new EditorGUI.IndentLevelScope())
             {
                 EditorGUILayout.HelpBox(
-                    "Zabarwia polowe nieba (w pionie) wybranym kolorem.\n" +
-                    "Direction = kierunek kompasowy (0=przod, 90=prawo, 180=tyl, 270=lewo).\n" +
-                    "Spread = szerokosc strefy przejscia.  Strength = 0 -> wylaczony.",
+                    "Tints one side of the sky with a chosen color.\n" +
+                    "Direction = compass angle (0=forward, 90=right, 180=back, 270=left).\n" +
+                    "Spread = falloff width.  Strength = 0 -> disabled.",
                     MessageType.None);
                 Draw(props, editor,
                     "_SkyGradColor", "_SkyGradAngle", "_SkyGradSpread", "_SkyGradStr");
@@ -99,8 +99,8 @@ public class EmacSkyboxURPEditor : ShaderGUI
             using (new EditorGUI.IndentLevelScope())
             {
                 EditorGUILayout.HelpBox(
-                    "Atmosphere Strength = intensywnosc perspektywy powietrznej na horyzoncie.\n" +
-                    "Atmosphere Falloff = jak szybko zanika od horyzontu ku zenitowi.",
+                    "Atmosphere Strength = intensity of aerial perspective haze at the horizon.\n" +
+                    "Atmosphere Falloff = how quickly the haze fades from horizon toward zenith.",
                     MessageType.None);
                 Draw(props, editor,
                     "_AtmosphereColor", "_AtmosphereStrength", "_AtmosphereFalloff");
@@ -151,11 +151,11 @@ public class EmacSkyboxURPEditor : ShaderGUI
                     int styleIdx = Mathf.RoundToInt(styleProp.floatValue);
                     string[] styleNames =
                     {
-                        "0 — Standard (FBM)",
-                        "1 — Pierzaste (Ridged / cirrus)",
-                        "2 — Oblé (Voronoi Euklides)",
-                        "3 — Skosne 45° (FBM rotated)",
-                        "4 — Cubic (Voronoi Czebyszew)",
+                        "0 - Standard (FBM)",
+                        "1 - Feathered (Ridged / cirrus)",
+                        "2 - Round (Voronoi Euclidean)",
+                        "3 - Diagonal 45deg (FBM rotated)",
+                        "4 - Cubic (Voronoi Chebyshev)",
                     };
                     EditorGUI.BeginChangeCheck();
                     styleIdx = EditorGUILayout.Popup("Cloud Style", styleIdx, styleNames);
@@ -165,7 +165,7 @@ public class EmacSkyboxURPEditor : ShaderGUI
                     EditorGUILayout.Space(4);
 
                     EditorGUILayout.HelpBox(
-                        "Gladkie    : Bands=1,  Softness=0.15, Stretch=0\n" +
+                        "Smooth     : Bands=1,  Softness=0.15, Stretch=0\n" +
                         "Cel-shaded : Bands=5,  Softness=0.02, Stretch=0\n" +
                         "Johnny Bravo: Bands=3, Softness=0.001, Stretch=0.85",
                         MessageType.None);
