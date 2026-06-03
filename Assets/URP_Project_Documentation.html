@@ -38,7 +38,27 @@ tr:nth-child(even) td{background:#f6fcff}
     <h1><span class='brand-e'>EMACE</span><span class='brand-a'>ART</span> &nbsp;URP Project Setup <span class='badge'>v 1.3</span></h1>
     <div style='font-size:12px;color:#555;margin-top:4px'>Render Pipeline Configuration &amp; Post-Processing Reference</div>
   </div>
-  <div class='meta'>EmacE Art<br>2026 · 05 · 15<br>Unity URP 14.x</div>
+  <div class='meta'>EmacE Art<br>2026 · 06 · 03<br>Unity URP 14.x</div>
+</div>
+<div style='background:linear-gradient(135deg,#1a2550 0%,#2e4a9e 60%,#1a7a4a 100%);border-radius:6px;padding:22px 28px;margin-bottom:28px;position:relative;overflow:hidden'>
+<div style='position:absolute;right:-30px;top:-30px;width:130px;height:130px;border-radius:50%;border:18px solid rgba(255,255,255,0.06)'></div>
+<div style='position:absolute;right:10px;top:10px;width:70px;height:70px;border-radius:50%;border:10px solid rgba(255,255,255,0.08)'></div>
+<div style='display:flex;align-items:flex-start;justify-content:space-between;gap:20px'>
+  <div style='flex:1'>
+    <div style='display:flex;align-items:center;gap:10px;margin-bottom:8px'>
+      <span style='font-size:10px;font-weight:800;letter-spacing:2px;background:#2ecc71;color:#0a2a18;padding:3px 10px;border-radius:20px;text-transform:uppercase'>● Live Development</span>
+      <span style='font-size:10px;font-weight:700;letter-spacing:1.5px;background:rgba(255,255,255,0.15);color:#fff;padding:3px 10px;border-radius:20px;text-transform:uppercase'>Early Access</span>
+    </div>
+    <div style='font-size:20px;font-weight:800;color:#fff;margin-bottom:6px;letter-spacing:0.3px'>URP Connector <span style='color:#2ecc71'>is being built.</span></div>
+    <div style='font-size:12px;color:rgba(255,255,255,0.75);line-height:1.7;max-width:480px'>A Unity Editor tool that connects, configures and upgrades your entire URP pipeline in one window — quality tiers, post-processing profiles, materials, terrain, shaders and more. No manual digging through Project Settings.</div>
+    <div style='margin-top:14px;font-size:11.5px;color:rgba(255,255,255,0.55)'>Want to follow progress or shape what gets built next? <a href='mailto:emaceart@gmail.com' style='color:#2ecc71;font-weight:700;text-decoration:none'>emaceart@gmail.com</a></div>
+  </div>
+  <div style='flex-shrink:0;text-align:center;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.12);border-radius:6px;padding:14px 18px;min-width:110px'>
+    <div style='font-size:28px;font-weight:800;color:#2ecc71;line-height:1'>v 1.3</div>
+    <div style='font-size:9.5px;color:rgba(255,255,255,0.5);text-transform:uppercase;letter-spacing:1px;margin-top:4px'>current build</div>
+    <div style='margin-top:12px;font-size:9.5px;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:1px'>EmacE Art</div>
+  </div>
+</div>
 </div>
 <div class='section'><div class='sh'>Quick Setup Guide — How to Connect URP</div>
 <p style='font-size:12px;color:#444;margin-bottom:10px'>Follow these steps in order. Each step takes under a minute.</p>
@@ -55,6 +75,76 @@ tr:nth-child(even) td{background:#f6fcff}
 </tbody></table>
 <div class='note' style='margin-top:8px'><b>Health check:</b> The five status dots at the top of the panel (URP · Assets · Volume · Camera PP · SSAO) turn green as each step is completed. All green = fully connected.</div>
 </div>
+<div class='section'>
+<div class='sh' style='background:#7a6e2a;border-left-color:#2ecc71;display:flex;justify-content:space-between;align-items:center'>
+  <span>Manual Setup — How to Connect URP Without the Tool</span>
+  <span style='font-size:10px;font-weight:800;background:#2ecc71;color:#0a2a18;padding:2px 10px;border-radius:20px;letter-spacing:1.5px;text-transform:uppercase'>WIP</span>
+</div>
+<div class='note' style='border-left-color:#c8a800;background:#fdf9e8;margin-bottom:14px'>
+  <b>⚠ Work in Progress</b> — An automated in-tool version of this walkthrough is under development. The steps below are the full manual fallback.
+  Have suggestions or want to know when it ships? <a href='mailto:emaceart@gmail.com' style='color:#2a6e20;font-weight:700'>emaceart@gmail.com</a>
+</div>
+
+<div class='ssh'>Step 1 — Install Universal Render Pipeline Package</div>
+<table><thead><tr><th style='width:30%'>Action</th><th>Details</th></tr></thead><tbody>
+<tr><td>Open Package Manager</td><td><b>Window → Package Manager</b></td></tr>
+<tr><td>Switch registry</td><td>Top-left dropdown → <b>Unity Registry</b></td></tr>
+<tr><td>Find &amp; install</td><td>Search <b>Universal RP</b> → click <b>Install</b>. Wait for compilation.</td></tr>
+<tr><td>Or via manifest.json</td><td>Add <code>&quot;com.unity.render-pipelines.universal&quot;: &quot;14.x.x&quot;</code> to <code>Packages/manifest.json</code> dependencies.</td></tr>
+</tbody></table>
+
+<div class='ssh'>Step 2 — Create Pipeline Asset &amp; Renderer</div>
+<table><thead><tr><th style='width:30%'>Action</th><th>Details</th></tr></thead><tbody>
+<tr><td>Create URP Asset</td><td><b>Assets → Create → Rendering → URP Asset (with Universal Renderer)</b> — Unity creates both the pipeline asset and a renderer asset.</td></tr>
+<tr><td>Recommended location</td><td>Save inside a <em>Settings/</em> or <em>Rendering/</em> folder (e.g. <code>Assets/Settings/</code>).</td></tr>
+<tr><td>Multiple quality tiers</td><td>Repeat for each level and add a suffix: <code>-LowQuality</code>, <code>-MediumQuality</code>, <code>-HighQuality</code>, <code>-VeryHighQuality</code>.</td></tr>
+</tbody></table>
+
+<div class='ssh'>Step 3 — Assign to Graphics Settings</div>
+<table><thead><tr><th style='width:30%'>Action</th><th>Details</th></tr></thead><tbody>
+<tr><td>Open Graphics Settings</td><td><b>Edit → Project Settings → Graphics</b></td></tr>
+<tr><td>Assign pipeline asset</td><td>Drag the asset into <b>Scriptable Render Pipeline Settings</b>.</td></tr>
+<tr><td>Verify</td><td>Scene view header switches to &quot;Universal&quot;. No pink error shaders.</td></tr>
+</tbody></table>
+
+<div class='ssh'>Step 4 — Wire Per-Quality-Level Assets</div>
+<table><thead><tr><th style='width:30%'>Action</th><th>Details</th></tr></thead><tbody>
+<tr><td>Open Quality Settings</td><td><b>Edit → Project Settings → Quality</b></td></tr>
+<tr><td>Per level</td><td>Click a quality level → find <b>Render Pipeline Asset</b> in the right panel → assign the matching tier asset.</td></tr>
+<tr><td>Set default</td><td>Click ✓ next to the level you want active by default (e.g. <em>High</em>).</td></tr>
+</tbody></table>
+
+<div class='ssh'>Step 5 — Convert Materials</div>
+<table><thead><tr><th style='width:30%'>Action</th><th>Details</th></tr></thead><tbody>
+<tr><td>Select materials</td><td>Select folder in Project window → <b>Edit → Select All</b>.</td></tr>
+<tr><td>Run converter</td><td><b>Edit → Rendering → Materials → Convert Selected Built-in Materials to URP</b></td></tr>
+<tr><td>Vertex Color materials</td><td>Use <em>Connect Vertex Color Shader</em> in URP Connector — shader is created automatically.</td></tr>
+<tr><td>Review</td><td>Pink materials after conversion need manual shader assignment.</td></tr>
+</tbody></table>
+
+<div class='ssh'>Step 6 — Fix Terrain Materials</div>
+<table><thead><tr><th style='width:30%'>Action</th><th>Details</th></tr></thead><tbody>
+<tr><td>Problem</td><td>Built-in terrain shaders are incompatible with URP — terrain appears pink or black.</td></tr>
+<tr><td>Manual fix</td><td>Create a new material → shader <b>Universal Render Pipeline / Terrain / Lit</b> → assign to Terrain in Inspector → <em>Terrain Settings → Material</em>.</td></tr>
+<tr><td>Automated</td><td>Use the <em>Fix Terrain</em> button in URP Connector.</td></tr>
+</tbody></table>
+
+<div class='ssh'>Step 7 — Post-Processing Volume</div>
+<table><thead><tr><th style='width:30%'>Action</th><th>Details</th></tr></thead><tbody>
+<tr><td>Create Volume</td><td>Hierarchy: <b>right-click → Volume → Global Volume</b>.</td></tr>
+<tr><td>Assign profile</td><td>Inspector → click <b>New</b> or assign an existing Volume Profile asset.</td></tr>
+<tr><td>Enable on camera</td><td>Camera → Inspector → <b>Rendering → Post Processing</b> must be <b>On</b>.</td></tr>
+<tr><td>Check renderer</td><td>URP Renderer asset → <b>Post Processing</b> enabled in Filtering.</td></tr>
+</tbody></table>
+
+<div class='ssh'>Step 8 — Verify</div>
+<table><thead><tr><th style='width:30%'>Check</th><th>Expected result</th></tr></thead><tbody>
+<tr><td>Scene view</td><td>No pink materials, no console errors about missing pipeline asset.</td></tr>
+<tr><td>Game view</td><td>Post-processing effects visible (bloom, vignette, tonemapping).</td></tr>
+<tr><td>Quality Settings</td><td>Each level has a dedicated URP asset assigned.</td></tr>
+<tr><td>Shadows</td><td>Directional light casts shadows — check <em>Shadow Max Distance</em> on pipeline asset.</td></tr>
+</tbody></table>
+</div>
 <div class='section'><div class='sh'>1 — Render Pipeline</div>
 <table><thead><tr><th>Quality Level</th><th>Pipeline Asset</th><th>Status</th></tr></thead><tbody>
 <tr><td style=''>Fastest</td><td style=''>New Universal Render Pipeline Asset-LowestQuality</td><td><span class='pill'>active</span></td></tr>
@@ -66,7 +156,7 @@ tr:nth-child(even) td{background:#f6fcff}
 </tbody></table>
 <div class='ssh'>Very High — Shadow Configuration</div>
 <table><thead><tr><th>Parameter</th><th>Value</th></tr></thead><tbody>
-<tr><td>Shadow Max Distance</td><td><b>150 m</b></td></tr>
+<tr><td>Shadow Max Distance</td><td><b>160 m</b></td></tr>
 <tr><td>Cascade Count</td><td><b>4</b></td></tr>
 <tr><td>Depth Bias</td><td><b>0,00</b></td></tr>
 <tr><td>Normal Bias</td><td><b>0,00</b></td></tr>
@@ -127,6 +217,44 @@ tr:nth-child(even) td{background:#f6fcff}
 <p style='font-size:12px;color:#333'>All pipeline asset <code>.meta</code> files were assigned fresh GUIDs.
 References in <code>.prefab .mat .unity .asset .controller .anim</code> files across the project were updated to match.
 The pipeline folder is safe for redistribution and cross-project import without GUID collisions.</p>
+</div>
+<div class='section'><div class='sh'>6 — Vertex Color Materials</div>
+
+<p style='font-size:12px;color:#444;margin-bottom:12px'>
+Vertex Color is a technique where colour information is stored directly in the mesh's vertex data instead of a texture.
+It's commonly used in low-poly, stylised and performance-critical assets — zero texture memory, instant rendering, no UV unwrapping needed.
+</p>
+
+<div class='ssh'>What it does</div>
+<table><thead><tr><th>Feature</th><th>Description</th></tr></thead><tbody>
+<tr><td><b>Auto-detect</b></td><td>Scans the selected materials folder for any material whose shader name contains <em>VertexColor</em> or <em>VertColor</em>.</td></tr>
+<tr><td><b>One-click conversion</b></td><td>Swaps the shader to <code>Custom/URP/VertexColor</code> and transfers <code>_Color → _BaseColor</code> so the tint is preserved.</td></tr>
+<tr><td><b>Auto shader generation</b></td><td>If the URP vertex color shader is missing from the project it is created automatically at <code>Assets/EmacEArt/VertexColorURP.shader</code> — no manual file copying needed.</td></tr>
+<tr><td><b>Lighting support</b></td><td>The generated shader uses PBR lighting (shadows, ambient, fog) — not flat/unlit. Matches the visual style of URP/Lit materials.</td></tr>
+<tr><td><b>Color tint</b></td><td>A <em>Base Color</em> tint property multiplies over vertex colours — useful for global brightness or colour shifts per material.</td></tr>
+</tbody></table>
+
+<div class='ssh'>Requirements — when it works</div>
+<table><thead><tr><th>Requirement</th><th>Details</th></tr></thead><tbody>
+<tr><td><b>URP installed</b></td><td>The shader uses URP-specific HLSL includes. It will not compile in a Built-in or HDRP project.</td></tr>
+<tr><td><b>Mesh has vertex colours</b></td><td>The mesh must have vertex colour data baked in (exported from Blender, Maya etc. with vertex colours enabled). If the mesh has no colour data Unity passes white (1,1,1,1) — result looks correct but flat.</td></tr>
+<tr><td><b>Materials folder selected</b></td><td>The <em>Materials Folder</em> field in the URP Connector window must point to the folder containing the target materials.</td></tr>
+<tr><td><b>Shader name convention</b></td><td>Source materials must use a shader whose name contains <em>VertexColor</em> or <em>VertColor</em> (case-insensitive). Materials already on <code>Custom/URP/VertexColor</code> are skipped.</td></tr>
+</tbody></table>
+
+<div class='ssh'>When it will NOT work</div>
+<table><thead><tr><th>Situation</th><th>Why</th></tr></thead><tbody>
+<tr><td>Mesh uses texture-based colour</td><td>Switching to the vertex color shader will drop the texture — albedo becomes black/white.</td></tr>
+<tr><td>Shader name doesn't match convention</td><td>Materials with unrecognised shader names are skipped. Rename the shader or assign manually.</td></tr>
+<tr><td>No materials folder set</td><td>The button is disabled until a folder is selected in the Materials section.</td></tr>
+<tr><td>Built-in / HDRP pipeline</td><td>The <code>Custom/URP/VertexColor</code> shader requires URP packages to compile.</td></tr>
+</tbody></table>
+
+<div class='note' style='margin-top:10px'>
+<b>Tip:</b> After conversion verify in the Scene view that colours look correct.
+If a material appears too dark, check that the mesh normals are correct — the shader uses PBR ambient (SampleSH) which responds to normal direction.
+If a material appears white/grey the mesh likely has no vertex colour data baked in.
+</div>
 </div>
 <div class='footer'><span>URP Setup v1.3 — Project Documentation</span><span class='brand'><span class='brand-e' style='color:#1565C0'>EMACE</span><span style='color:#C62828'>ART</span> · 2026</span></div>
 </body></html>

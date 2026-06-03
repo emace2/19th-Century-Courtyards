@@ -343,7 +343,7 @@ Shader "EmacEArt/SkyboxURP"
                     float n;
                     if      (cStyle == 1) n = CloudFBMRidged(cloudUV);          // feathered / cirrus
                     else if (cStyle == 2) n = CloudVoronoiEuclid(cloudUV);      // round blobs
-                    else if (cStyle == 3) {                                      // skośne 45°
+                    else if (cStyle == 3) {                                      // diagonal 45 deg
                         float2 rUV = float2(cloudUV.x * 0.7071 - cloudUV.y * 0.7071,
                                             cloudUV.x * 0.7071 + cloudUV.y * 0.7071);
                         n = CloudFBM(rUV);
