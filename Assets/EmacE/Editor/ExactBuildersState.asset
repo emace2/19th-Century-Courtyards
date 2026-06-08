@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: ExactBuildersState
   m_EditorClassIdentifier: Assembly-CSharp-Editor:EmacE.Tools.PrefabResearcherExact:ExactBuildersState
   useMasterFolder: 1
-  masterFolder: {fileID: 102900000, guid: 560c65bbfe29f0b4a924455608fc7c1c, type: 3}
+  masterFolder: {fileID: 0}
   meshesSubPath: Meshes
   prefabsSubPath: Prefabs
   createAndVerifySubfolders: 1
@@ -36,6 +36,7 @@ MonoBehaviour:
   compareFold: 1
   compareOriginalFolder: {fileID: 102900000, guid: 25a3a6bd7c385074c8f19c4c89b713ca,
     type: 3}
-  compareTempFolder: {fileID: 0}
-  compareTargetFolder: {fileID: 0}
-  compareRecursive: 1
+  compareTempFolder: {fileID: 102900000, guid: 9f1a7931c08cf274898c4252d54fddc9, type: 3}
+  compareTargetFolder: {fileID: 102900000, guid: 1916a9e022a47774c8d798644e2ca6c1,
+    type: 3}
+  compareRecursive: 0
